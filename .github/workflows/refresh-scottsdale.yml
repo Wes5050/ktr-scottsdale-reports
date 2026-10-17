@@ -1,0 +1,41 @@
+name: Refresh Scottsdale dashboard
+
+on:
+  schedule:
+    - cron: "50 13 * * *"   # 6:50 AM Arizona time, every day
+  workflow_dispatch: {}     # "Run workflow" button for manual runs
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-scottsdale
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pull Windsor data, check it, update data.json
+        env:
+          WINDSOR_API_KEY: ${{ secrets.WINDSOR_API_KEY }}
+        run: python scripts/refresh_scottsdale.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "KTR dashboard refresh"
+          git config user.email "actions@users.noreply.github.com"
+          git add ktr-scottsdale/data.json
+          if git diff --cached --quiet; then
+            echo "No change to commit"
+          else
+            git commit -m "Scottsdale data refresh $(TZ=America/Phoenix date +%F)"
+            git push
+          fi
