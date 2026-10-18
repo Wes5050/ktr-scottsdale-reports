@@ -3,6 +3,8 @@ name: Refresh Scottsdale dashboard
 on:
   schedule:
     - cron: "50 13 * * *"   # 6:50 AM Arizona time, every day
+    - cron: "25 15 * * *"   # 8:25 AM backup (GitHub sometimes skips scheduled runs)
+    - cron: "40 18 * * *"   # 11:40 AM backup
   workflow_dispatch: {}     # "Run workflow" button for manual runs
 
 permissions:
