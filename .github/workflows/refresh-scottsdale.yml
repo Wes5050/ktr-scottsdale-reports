@@ -39,5 +39,6 @@ jobs:
             echo "No change to commit"
           else
             git commit -m "Scottsdale data refresh $(TZ=America/Phoenix date +%F)"
+            git pull --rebase origin main
             git push
           fi

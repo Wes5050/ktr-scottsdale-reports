@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>KTR Chandler Ads Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Layout: navy cover band (logo, tri-stripe, big two-tone headline) over white report pages — KPI strip, daily chart, package bars + item table, purchase log, SOP-style footer. Brand from KTR SOP: Montserrat Black caps, blue/yellow/red stripe, black table heads, navy callouts with yellow labels. */
+:root{
+  --navy:#0a1626; --navy-2:#0f2640; --on-navy:#ffffff; --on-navy-2:#b9c6d6;
+  --blue:#0a8fd6; --yellow:#f7c919; --red:#e0202a;
+  --bg:#f4f6f9; --panel:#ffffff; --ink:#0b0f14; --ink-2:#3d4652; --ink-3:#7d8794; --line:#e3e8ee; --row:#f7f9fb;
+  --th-bg:#0b0f14; --th-ink:#ffffff; --track:#e8edf2;
+  --font:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#07101b; --panel:#0e1b2b; --ink:#f1f4f8; --ink-2:#c3ccd7; --ink-3:#8795a6; --line:#1e2f44; --row:#12223a;
+  --th-bg:#000000; --th-ink:#ffffff; --track:#1b2c42; --blue:#2aa3ea; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#07101b; --panel:#0e1b2b; --ink:#f1f4f8; --ink-2:#c3ccd7; --ink-3:#8795a6; --line:#1e2f44; --row:#12223a;
+  --th-bg:#000000; --th-ink:#ffffff; --track:#1b2c42; --blue:#2aa3ea; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14.5px;line-height:1.5}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px}
+.stripe{display:inline-flex;gap:5px}
+.stripe i{display:block;width:62px;height:9px;transform:skewX(-28deg)}
+.stripe i:nth-child(1){background:var(--blue)}.stripe i:nth-child(2){background:var(--yellow)}.stripe i:nth-child(3){background:var(--red)}
+.stripe.sm i{width:18px;height:4px}
+.cover{background:radial-gradient(900px 420px at 92% 0%,#12406a 0%,transparent 60%),radial-gradient(600px 300px at 0% 0%,rgba(224,32,42,.14),transparent 60%),linear-gradient(180deg,var(--navy-2),var(--navy));color:var(--on-navy);padding-block:28px 34px}
+.cover .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cover img{width:190px;max-width:48%;height:auto;display:block}
+.eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.cover .eyebrow{margin-top:34px;color:#2aa3ea}
+.cover h1{margin:8px 0 0;font-weight:900;text-transform:uppercase;font-size:clamp(34px,6.2vw,64px);line-height:.98;letter-spacing:-.01em;text-wrap:balance}
+.cover h1 span{color:#1d9be6;display:block}
+.cover .meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px;margin-top:16px}
+.cover p{margin:0;max-width:56ch;color:var(--on-navy-2);font-size:15px}
+.upd{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--on-navy-2);text-align:right}
+main.wrap{padding-block:22px 40px;display:flex;flex-direction:column;gap:18px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);padding:3px;gap:2px}
+.seg button{font:700 12px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);background:transparent;border:0;padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--th-bg);color:var(--th-ink)}
+.seg button:focus-visible,.more:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.span{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.kpi.lead{background:linear-gradient(160deg,var(--navy-2),var(--navy));border-color:var(--navy);color:var(--on-navy)}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:var(--blue)}
+.kpi.lead .l{color:var(--yellow)}
+.kpi .v{font-weight:900;font-size:34px;line-height:1.05;letter-spacing:-.01em}
+.kpi .s{font-size:12.5px;color:var(--ink-3)}
+.kpi.lead .s{color:var(--on-navy-2)}
+.card{background:var(--panel);border:1px solid var(--line);padding:20px;min-width:0}
+.card h2{margin:4px 0 4px;font-weight:900;font-size:22px;text-transform:uppercase;line-height:1.05;letter-spacing:-.005em}
+.card .sub{margin:0 0 14px;font-size:13.5px;color:var(--ink-2)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;align-items:start}
+#daily{position:relative}
+#daily svg{display:block;width:100%;height:auto}
+.tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;font-size:12.5px;padding:7px 10px;white-space:nowrap;transform:translate(-50%,-100%);margin-top:-8px;border-left:3px solid var(--yellow)}
+.hb{display:flex;flex-direction:column;gap:10px}
+.hb .r{display:grid;grid-template-columns:minmax(0,185px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
+.hb .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-2);font-weight:600}
+.hb .t{height:14px;background:var(--track);border-radius:0 4px 4px 0;overflow:hidden}
+.hb .f{height:100%;background:var(--blue);border-radius:0 4px 4px 0}
+.hb .val{font-weight:800;min-width:70px;text-align:right}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--th-ink);background:var(--th-bg);font-weight:800;padding:10px}
+td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+tbody tr:nth-child(even) td{background:var(--row)}
+td.r,th.r{text-align:right}
+tr.party td:first-child{font-weight:800;color:var(--ink)}
+.pill{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:var(--yellow);color:#0b0f14;padding:2px 6px;margin-left:6px;vertical-align:1px}
+.more{margin-top:12px;font:800 11.5px var(--font);letter-spacing:.12em;text-transform:uppercase;background:transparent;border:2px solid var(--ink);color:var(--ink);padding:8px 14px;cursor:pointer}
+.empty{color:var(--ink-3);font-size:14px;padding:20px 0}
+footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding-top:6px}
+.kpis.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kpi.spend{border-top:4px solid var(--red)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+.legend i{display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px}
+@media (max-width:860px){.kpis,.kpis.k3{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:minmax(0,1fr)}.upd{text-align:left}}
+@media (max-width:420px){.kpi .v{font-size:27px}.hb .r{grid-template-columns:minmax(0,105px) minmax(0,1fr) auto}.stripe i{width:40px}.cover .top .stripe{display:none}}
+@media (prefers-reduced-motion:no-preference){.hb .f{transition:width .4s ease}}
+</style></head>
+<body>
+
+<header class="cover"><div class="wrap">
+  <div class="top"><img src="logo.png" alt="KTR Indoor Action Sports Playground"><div class="stripe" aria-hidden="true"><i></i><i></i><i></i></div></div>
+  <div class="eyebrow">KTR Chandler · Google Ads Report</div>
+  <h1>Every booking.<span>Tracked.</span></h1>
+  <div class="meta">
+    <p>Birthday parties booked online at KTR Chandler by families who clicked a Chandler Google ad, set against what those ads cost.</p>
+    <div class="upd" id="upd">Loading…</div>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Date range">
+      <button id="r7" data-d="7">7 days</button>
+      <button id="r30" data-d="30">30 days</button>
+      <button id="rm" data-d="month">This month</button>
+      <button id="ra" data-d="all" aria-pressed="true">All time</button>
+    </div>
+    <div class="span" id="span"></div>
+  </div>
+
+  <section class="kpis">
+    <div class="kpi lead"><div class="l">Estimated party value</div><div class="v num" id="k-rev">–</div><div class="s" id="k-rev-s"></div></div>
+    <div class="kpi"><div class="l">Parties booked from ads</div><div class="v num" id="k-pur">–</div><div class="s" id="k-pur-s"></div></div>
+    <div class="kpi"><div class="l">Collected online</div><div class="v num" id="k-avg">–</div><div class="s" id="k-avg-s"></div></div>
+    <div class="kpi"><div class="l">Clicks</div><div class="v num" id="k-clk">–</div><div class="s" id="k-clk-s"></div></div>
+  </section>
+  <section class="kpis k3">
+    <div class="kpi spend"><div class="l">Google Ads spend</div><div class="v num" id="k-spend">–</div><div class="s" id="k-spend-s"></div></div>
+    <div class="kpi"><div class="l">Return on ad spend</div><div class="v num" id="k-roas">–</div><div class="s" id="k-roas-s"></div></div>
+    <div class="kpi"><div class="l">Cost per party</div><div class="v num" id="k-cpp">–</div><div class="s" id="k-cpp-s"></div></div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">Trend</div><h2>Daily value vs. spend.</h2><p class="sub">Estimated value of ad bookings by day, with what the ads cost that day. Hover a day for details.</p>
+    <div id="daily"></div>
+    <div class="legend"><span><i style="background:var(--blue)"></i>Estimated party value</span><span><i style="background:var(--red);height:4px;vertical-align:3px"></i>Ad spend</span></div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">Campaigns</div><h2>Where the money goes.</h2><p class="sub">Spend and clicks by campaign since Sep 24.</p>
+    <div class="tw"><table><thead><tr><th>Campaign</th><th class="r">Spend</th><th class="r">Clicks</th><th class="r">Cost per click</th><th class="r">Share of spend</th></tr></thead><tbody id="camps"></tbody></table></div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow">How this is counted</div><h2>What's included.</h2>
+    <p class="sub" style="max-width:76ch;margin:0">Parties come from Chandler's own Google Ads account (the "KTR Chandler - Party Purchase" conversion): a party counts only when the family clicked a Chandler Google ad before booking online, starting Sep 24, 2026. Online bookings collect a deposit, so each party is valued at <span id="pv">$300</span> for estimated value, return on ad spend and cost per party; "Collected online" is the deposits actually charged. Google splits credit when a family clicked more than one ad, so party counts can include fractions. Calls from ads and store-visit estimates are not included.</p>
+  </section>
+
+  <footer><span>KTR Chandler — Google Ads Report</span><span class="stripe sm" aria-hidden="true"><i></i><i></i><i></i></span><span>Refreshed daily</span></footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const money=v=>'$'+Math.round(v).toLocaleString('en-US');
+const money2=v=>'$'+(Math.round(v*100)/100).toLocaleString('en-US',{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2});
+const fmtN=v=>(Math.round(v*10)/10).toLocaleString('en-US');
+const fmtD=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const iso=dt=>dt.slice(0,4)+'-'+dt.slice(4,6)+'-'+dt.slice(6,8);
+let D=null, RANGE='all', PV=300;
+
+function parse(d){
+  const conv={},spend={};
+  (d.conversions||'').split(';').filter(Boolean).forEach(x=>{const [dt,n,v]=x.split(',');conv[iso(dt)]={n:+n,v:+v}});
+  (d.spend||'').split(';').filter(Boolean).forEach(x=>{const [dt,s,c]=x.split(',');spend[iso(dt)]={s:+s,c:+c}});
+  const days=Object.keys(spend).concat(Object.keys(conv)).sort();
+  return {updated:d.updated,conv,spend,campaigns:d.campaigns||[],first:days[0],end:d.through||days[days.length-1]};
+}
+function rangeDates(){
+  const end=D.end; let start=D.first;
+  const e=new Date(end+'T12:00:00');
+  if(RANGE==='7'||RANGE==='30'){const s=new Date(e);s.setDate(s.getDate()-(+RANGE-1));start=s.toISOString().slice(0,10);}
+  if(RANGE==='month') start=end.slice(0,8)+'01';
+  if(start<D.first) start=D.first;
+  const days=[];for(let x=new Date(start+'T12:00:00');x<=e;x.setDate(x.getDate()+1)) days.push(x.toISOString().slice(0,10));
+  return days;
+}
+function sum(days){let dep=0,n=0,s=0,c=0;days.forEach(d=>{if(D.conv[d]){dep+=D.conv[d].v;n+=D.conv[d].n}if(D.spend[d]){s+=D.spend[d].s;c+=D.spend[d].c}});return {rev:n*PV,dep,n,s,c};}
+function prevDays(days){
+  if(RANGE==='all') return null;
+  const s=new Date(days[0]+'T12:00:00');const out=[];
+  for(let i=days.length;i>=1;i--){const x=new Date(s);x.setDate(x.getDate()-i);out.push(x.toISOString().slice(0,10));}
+  return out[0]<D.first?null:out;
+}
+function delta(cur,prev){if(prev==null)return '';if(!prev)return 'vs none prior period';const p=Math.round((cur-prev)/prev*100);return (p>=0?'▲ ':'▼ ')+Math.abs(p)+'% vs prior period';}
+function render(){
+  const days=rangeDates(); const t=sum(days); const pd=prevDays(days); const p=pd?sum(pd):null;
+  $('span').textContent=`${fmtD(days[0])} – ${fmtD(days[days.length-1])}, 2026`;
+  $('k-rev').textContent=money(t.rev); $('k-rev-s').textContent=p?delta(t.rev,p.rev):`Parties × ${money(PV)}`;
+  $('k-pur').textContent=fmtN(t.n); $('k-pur-s').textContent=p?delta(t.n,p.n):'Booked online after an ad click';
+  $('k-avg').textContent=money(t.dep); $('k-avg-s').textContent='Deposits charged at checkout';
+  $('k-clk').textContent=t.c.toLocaleString('en-US'); $('k-clk-s').textContent=t.c?`${(t.n/t.c*100).toFixed(1)}% of clicks booked a party`:'';
+  $('k-spend').textContent=money(t.s); $('k-spend-s').textContent=t.c?`${money2(t.s/t.c)} per click`:'';
+  $('k-roas').textContent=t.s?(t.rev/t.s).toFixed(1)+'×':'–'; $('k-roas-s').textContent=t.s?`${money2(t.rev/t.s)} back for every $1 spent`:'';
+  $('k-cpp').textContent=t.n?money(t.s/t.n):'–'; $('k-cpp-s').textContent=t.n?'Ad spend ÷ parties':'No parties in this range';
+  drawDaily(days);
+  const tot=D.campaigns.reduce((a,c)=>a+c.spend,0);
+  $('camps').innerHTML=D.campaigns.slice().sort((a,b)=>b.spend-a.spend).map(c=>`<tr><td>${c.name}</td><td class="r num">${money(c.spend)}</td><td class="r num">${c.clicks.toLocaleString('en-US')}</td><td class="r num">${money2(c.clicks?c.spend/c.clicks:0)}</td><td class="r num">${tot?(c.spend/tot*100).toFixed(1):0}%</td></tr>`).join('');
+}
+function drawDaily(days){
+  const box=$('daily');
+  const vals=days.map(d=>D.conv[d]?D.conv[d].n*PV:0), spv=days.map(d=>D.spend[d]?D.spend[d].s:null);
+  const W=1100,H=260,L=52,R=10,T=14,B=30,pw=W-L-R,ph=H-T-B;
+  const mx=Math.max(...vals,...spv.map(v=>v||0),1);const step=mx>2000?500:mx>800?250:mx>300?100:50;const top=Math.ceil(mx/step)*step;
+  const y=v=>T+ph-(v/top*ph);const bw=pw/days.length;const gap=Math.min(2,bw*.2);
+  let g='';for(let v=0;v<=top;v+=step){g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="12" fill="var(--ink-3)" font-family="var(--font)">${v>=1000?'$'+(v/1000)+'K':'$'+v}</text>`;}
+  const every=Math.ceil(days.length/(box.clientWidth<500?5:10));let bars='',lab='',pts=[];
+  days.forEach((d,i)=>{const v=vals[i];const x=L+i*bw+gap/2;const w=Math.max(bw-gap,1);
+    if(v>0){const yy=y(v);const r=Math.min(4,w/2,ph*(v/top));bars+=`<path d="M${x},${T+ph} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+w-r} Q${x+w},${yy} ${x+w},${yy+r} V${T+ph} Z" fill="var(--blue)"/>`;}
+    if(spv[i]!=null) pts.push(`${(L+i*bw+bw/2).toFixed(1)},${y(spv[i]).toFixed(1)}`);
+    bars+=`<rect class="hit" data-i="${i}" x="${L+i*bw}" y="${T}" width="${bw}" height="${ph}" fill="transparent"/>`;
+    if(i%every===0) lab+=`<text x="${L+i*bw+bw/2}" y="${H-8}" text-anchor="middle" font-size="12" fill="var(--ink-3)" font-family="var(--font)">${fmtD(d)}</text>`;});
+  const line=pts.length?`<polyline points="${pts.join(' ')}" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" pointer-events="none"/>`:'';
+  box.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Daily Google Ads revenue and spend">${g}<line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" stroke="var(--ink-3)"/>${bars}${line}${lab}</svg><div class="tip" hidden></div>`;
+  const tip=box.querySelector('.tip'),svg=box.querySelector('svg');
+  svg.querySelectorAll('.hit').forEach(h=>{h.addEventListener('mouseenter',()=>{const i=+h.dataset.i;const c=D.conv[days[i]];
+    tip.innerHTML=`<b>${fmtD(days[i])}</b> · ${money2(vals[i])}<br>${c?fmtN(c.n):0} parties`+(spv[i]!=null?`<br>Ad spend ${money2(spv[i])}`:'');
+    const sc=svg.clientWidth/W;tip.style.left=((L+i*bw+bw/2)*sc)+'px';tip.style.top=(y(Math.max(vals[i],spv[i]||0))*sc)+'px';tip.hidden=false;h.setAttribute('fill','rgba(127,127,127,.12)')});
+    h.addEventListener('mouseleave',()=>{tip.hidden=true;h.setAttribute('fill','transparent')});});
+}
+document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');RANGE=b.dataset.d;render();}));
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>D&&render(),150)});
+fetch('data.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{D=parse(d);PV=+d.partyValue||300;$('pv').textContent=money(PV);
+  const u=new Date(d.updated);$('upd').textContent='Updated '+u.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'America/Phoenix'})+' AZ';
+  render();}).catch(()=>{$('upd').textContent='Data unavailable';$('daily').innerHTML='<div class="empty">Couldn’t load the data file. Refresh the page to try again.</div>';});
+</script>
+
+</body>
+</html>
