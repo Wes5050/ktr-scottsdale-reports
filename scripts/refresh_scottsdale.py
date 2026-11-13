@@ -17,6 +17,7 @@ import datetime as dt
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -44,14 +45,21 @@ def pull(connector, account, fields, date_from, date_to):
               "fields": ",".join(fields), "select_accounts": account}
     url = f"{API}/{connector}?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers={"User-Agent": "ktr-reports-refresh"})
-    try:
-        with urllib.request.urlopen(req, timeout=180) as r:
-            body = json.loads(r.read().decode())
-    except urllib.error.HTTPError as e:  # never print the URL: it carries the key
-        detail = e.read().decode(errors="replace")[:800].replace(KEY, "***")
-        fail(f"Windsor request failed for {connector} ({', '.join(fields)}): HTTP {e.code}: {detail}")
-    except Exception as e:
-        fail(f"Windsor request failed for {connector}: {type(e).__name__}: {e}".replace(KEY, "***"))
+    body = None
+    for attempt in range(1, 5):  # slow or flaky upstream: wait longer and retry before giving up
+        try:
+            with urllib.request.urlopen(req, timeout=300) as r:
+                body = json.loads(r.read().decode())
+            break
+        except urllib.error.HTTPError as e:  # never print the URL: it carries the key
+            detail = e.read().decode(errors="replace")[:800].replace(KEY, "***")
+            if e.code < 500 or attempt == 4:
+                fail(f"Windsor request failed for {connector} ({', '.join(fields)}): HTTP {e.code}: {detail}")
+        except Exception as e:
+            if attempt == 4:
+                fail(f"Windsor request failed for {connector}: {type(e).__name__}: {e}".replace(KEY, "***"))
+        print(f"{connector}: attempt {attempt} failed, retrying in {30 * attempt}s")
+        time.sleep(30 * attempt)
     rows = body.get("data") if isinstance(body, dict) else body
     if not isinstance(rows, list):
         fail(f"Unexpected Windsor response for {connector}")
